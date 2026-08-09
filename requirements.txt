@@ -19,3 +19,20 @@ pyyaml>=6.0
 # at HandDetector() construction time. If you hit that, pin an
 # earlier version known to include it, e.g.:
 #   pip install mediapipe==0.10.14
+
+
+# --- J/Z motion-sign GRU pipeline ---
+torch>=2.1
+
+# --- Install notes ---
+# Desktop (CPU-only, smaller download):
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+#
+# Raspberry Pi (aarch64/armv7):
+#   The generic PyPI torch wheel often isn't available for Pi. Use a
+#   prebuilt ARM wheel instead, e.g. via piwheels:
+#     pip install torch --index-url https://www.piwheels.org/simple
+#   or a wheel matching your exact Pi OS/Python version from
+#   https://github.com/Qengineering/PyTorch-Raspberry-Pi (unofficial builds).
+#   This project trains with a tiny 1-layer GRU (hidden_size=64) specifically
+#   so CPU-only inference on a Pi stays fast.
