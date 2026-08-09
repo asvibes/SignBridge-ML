@@ -30,32 +30,56 @@ changes needed, since the vocabulary list drives everything downstream.
 
 ```
 SignBridge-ML/
-├── app.py                              # main entry point (real-time prediction)
-├── configs/config.yaml                 # all paths, vocabulary, model & camera settings
+├── configs/
+│   └── config.yaml                          # + sequence_project section
 ├── dataset/
-│   ├── raw/<letter>/sample_NNNN.npy    # raw (21,3) hand landmarks, one file per sample
-│   └── processed/{train,val,test}.csv  # normalized (63,) feature vectors + label
+│   ├── raw/                                  # (unchanged, static alphabet)
+│   ├── processed/                            # (unchanged, static alphabet)
+│   ├── sequences/                            # NEW
+│   │   ├── j/
+│   │   │   ├── sequence_0001.npy             # (T, 21, 3) raw
+│   │   │   └── ...
+│   │   └── z/
+│   │       ├── sequence_0001.npy
+│   │       └── ...
+│   └── sequences_processed/                  # NEW
+│       ├── train.npz                         # X: (N, 20, 63), y: (N,)
+│       ├── val.npz
+│       └── test.npz
 ├── models/
-│   ├── checkpoints/                    # every trained model, timestamped
-│   └── final/model.joblib              # best model so far, what app.py loads
+│   ├── checkpoints/                          # (unchanged, static alphabet)
+│   ├── checkpoints_sequence/                 # NEW
+│   │   └── sequence_model_<timestamp>.pt
+│   └── final/
+│       ├── model.joblib                      # UNCHANGED - static alphabet
+│       ├── best_meta.json                    # UNCHANGED - static alphabet
+│       ├── sequence_model.pt                 # NEW - J/Z GRU weights
+│       └── sequence_model_meta.json          # NEW - architecture + classes
 ├── outputs/
-│   ├── confusion_matrix/               # evaluate.py's confusion matrix PNGs
-│   ├── logs/                           # predict.py / app.py run logs
-│   └── predictions/                    # reserved for future use
-└── src/
-    ├── data/
-    │   ├── collect_data.py             # interactive webcam data collection
-    │   ├── convert_images_to_landmarks.py  # batch: images -> raw .npy landmarks
-    │   └── preprocess.py               # raw .npy -> normalized train/val/test CSVs
-    ├── inference/
-    │   ├── mediapipe_detector.py       # MediaPipe Hands wrapper
-    │   └── predict.py                  # real-time webcam prediction loop
-    ├── models/
-    │   ├── train_model.py              # trains + promotes the best model
-    │   └── evaluate.py                 # accuracy/precision/recall/F1 + confusion matrix
-    └── utils/
-        └── utils.py                    # config loading, normalization, model loading, logging
-```
+│   ├── confusion_matrix/
+│   │   ├── confusion_matrix_<ts>.png          # (unchanged, static alphabet)
+│   │   └── seq_confusion_matrix_<ts>.png      # NEW
+│   └── logs/                                  # (unchanged, static alphabet)
+├── src/
+│   ├── data/
+│   │   ├── collect_data.py                    # UNCHANGED
+│   │   ├── convert_images_to_landmarks.py      # UNCHANGED
+│   │   ├── preprocess.py                       # UNCHANGED
+│   │   ├── collect_sequences.py                # NEW
+│   │   └── preprocess_sequences.py             # NEW
+│   ├── models/
+│   │   ├── train_model.py                      # UNCHANGED
+│   │   ├── evaluate.py                         # UNCHANGED
+│   │   ├── train_sequence_model.py             # NEW
+│   │   └── evaluate_sequence_model.py          # NEW
+│   ├── inference/
+│   │   ├── mediapipe_detector.py               # UNCHANGED (reused)
+│   │   ├── predict.py                          # UNCHANGED
+│   │   └── predict_sequence.py                 # NEW
+│   └── utils/
+│       └── utils.py                            # UNCHANGED (reused)
+├── requirements.txt                            # + torch
+└── app.py                                      # UNCHANGED
 
 ## Setup
 
