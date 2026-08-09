@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+dataset/raw/*/
+!dataset/raw/.gitkeep
+dataset/processed/*.csv
+models/checkpoints/*.joblib
+models/final/*.joblib
+models/final/best_meta.json
+outputs/confusion_matrix/*.png
+outputs/logs/*.log
+outputs/predictions/*
+.DS_Store
