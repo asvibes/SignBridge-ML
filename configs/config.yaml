@@ -94,3 +94,36 @@ inference:
   # Smooth the displayed prediction over the last N frames (simple mode
   # filter) so it doesn't flicker between classes frame-to-frame.
   smoothing_window: 5
+
+  # =============================================================================
+# J/Z motion-sign pipeline (separate from the static alphabet model above)
+# =============================================================================
+sequence_project:
+  vocabulary: [j, z]
+  sequence_length: 20   # frames per sequence after resampling/padding
+
+  paths:
+    dataset_sequences: dataset/sequences
+    dataset_sequences_processed: dataset/sequences_processed
+    models_checkpoints: models/checkpoints_sequence
+    models_final: models/final              # same folder, DIFFERENT filenames
+    outputs_confusion_matrix: outputs/confusion_matrix
+    outputs_logs: outputs/logs
+
+  model:
+    input_size: 63       # 21 landmarks * 3 coords, same as static pipeline
+    hidden_size: 64       # small/CPU-friendly for Raspberry Pi
+    num_layers: 1
+    dropout: 0.0
+
+  training:
+    batch_size: 8
+    epochs: 60
+    learning_rate: 0.001
+    val_ratio: 0.15
+    test_ratio: 0.15
+    seed: 42
+
+  inference:
+    confidence_threshold: 0.6
+    smoothing_window: 5   # majority-vote smoothing over last N predictions
