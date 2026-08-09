@@ -1,0 +1,96 @@
+# =============================================================================
+# SignBridge-ML configuration
+#
+# NOTE: This file was reconstructed from the keys referenced across
+# collect_data.py / preprocess.py / train_model.py / utils.py, plus the
+# additional keys needed by the new evaluate.py / predict.py / app.py.
+# If your real configs/config.yaml already exists, merge the new sections
+# marked below (outputs.*, inference.*) into it rather than replacing it.
+# =============================================================================
+
+project:
+  name: SignBridge-ML
+  seed: 42
+
+vocabulary:
+  # ASL fingerspelling alphabet, static poses only. J and Z are deliberately
+  # excluded: in real ASL they're traced with hand motion, not held as a
+  # single pose, so a single-frame classifier (like this project's) can't
+  # meaningfully learn them from one static landmark snapshot per sample.
+  # Add them back in if you'd rather approximate them from one frame anyway.
+  - a
+  - b
+  - c
+  - d
+  - e
+  - f
+  - g
+  - h
+  - i
+  - k
+  - l
+  - m
+  - n
+  - o
+  - p
+  - q
+  - r
+  - s
+  - t
+  - u
+  - v
+  - w
+  - x
+  - y
+
+paths:
+  dataset_raw: dataset/raw
+  dataset_processed: dataset/processed
+  models_checkpoints: models/checkpoints
+  models_final: models/final
+  # --- new: outputs used by evaluate.py / predict.py / app.py ---
+  outputs_confusion_matrix: outputs/confusion_matrix
+  outputs_logs: outputs/logs
+  outputs_predictions: outputs/predictions
+
+camera:
+  device_index: 0
+  frame_width: 640
+  frame_height: 480
+
+mediapipe:
+  max_num_hands: 1
+  min_detection_confidence: 0.7
+  min_tracking_confidence: 0.5
+  static_image_mode: false
+
+data_collection:
+  samples_per_sign: 100
+
+dataset_split:
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+
+model:
+  type: random_forest   # one of: random_forest | svm | mlp
+  random_forest:
+    n_estimators: 200
+    max_depth: 20
+  svm:
+    kernel: rbf
+    C: 1.0
+    probability: true
+  mlp:
+    hidden_layer_sizes: [128, 64]
+    max_iter: 500
+
+# --- new: used by predict.py / app.py ---
+inference:
+  # Predictions below this confidence are shown as "Uncertain" rather
+  # than the raw class name, to avoid flashing noisy low-confidence
+  # guesses on screen.
+  confidence_threshold: 0.6
+  # Smooth the displayed prediction over the last N frames (simple mode
+  # filter) so it doesn't flicker between classes frame-to-frame.
+  smoothing_window: 5
