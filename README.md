@@ -79,9 +79,8 @@ SignBridge-ML/
 │   └── utils/
 │       └── utils.py                            
 ├── requirements.txt                           
-└── app.py
-                                    
-```
+└── app.py                                      
+
 ## Setup
 
 ```bash
