@@ -31,55 +31,55 @@ changes needed, since the vocabulary list drives everything downstream.
 ```
 SignBridge-ML/
 ├── configs/
-│   └── config.yaml                          # + sequence_project section
+│   └── config.yaml                          
 ├── dataset/
-│   ├── raw/                                  # (unchanged, static alphabet)
-│   ├── processed/                            # (unchanged, static alphabet)
-│   ├── sequences/                            # NEW
+│   ├── raw/                                  
+│   ├── processed/                           
+│   ├── sequences/                          
 │   │   ├── j/
-│   │   │   ├── sequence_0001.npy             # (T, 21, 3) raw
+│   │   │   ├── sequence_0001.npy           
 │   │   │   └── ...
 │   │   └── z/
 │   │       ├── sequence_0001.npy
 │   │       └── ...
-│   └── sequences_processed/                  # NEW
-│       ├── train.npz                         # X: (N, 20, 63), y: (N,)
+│   └── sequences_processed/                 
+│       ├── train.npz                        
 │       ├── val.npz
 │       └── test.npz
 ├── models/
-│   ├── checkpoints/                          # (unchanged, static alphabet)
-│   ├── checkpoints_sequence/                 # NEW
+│   ├── checkpoints/                          
+│   ├── checkpoints_sequence/                
 │   │   └── sequence_model_<timestamp>.pt
 │   └── final/
-│       ├── model.joblib                      # UNCHANGED - static alphabet
-│       ├── best_meta.json                    # UNCHANGED - static alphabet
-│       ├── sequence_model.pt                 # NEW - J/Z GRU weights
-│       └── sequence_model_meta.json          # NEW - architecture + classes
+│       ├── model.joblib                      
+│       ├── best_meta.json                    
+│       ├── sequence_model.pt               
+│       └── sequence_model_meta.json         
 ├── outputs/
 │   ├── confusion_matrix/
-│   │   ├── confusion_matrix_<ts>.png          # (unchanged, static alphabet)
-│   │   └── seq_confusion_matrix_<ts>.png      # NEW
-│   └── logs/                                  # (unchanged, static alphabet)
+│   │   ├── confusion_matrix_<ts>.png        
+│   │   └── seq_confusion_matrix_<ts>.png      
+│   └── logs/                                 
 ├── src/
 │   ├── data/
-│   │   ├── collect_data.py                    # UNCHANGED
-│   │   ├── convert_images_to_landmarks.py      # UNCHANGED
-│   │   ├── preprocess.py                       # UNCHANGED
-│   │   ├── collect_sequences.py                # NEW
-│   │   └── preprocess_sequences.py             # NEW
+│   │   ├── collect_data.py                   
+│   │   ├── convert_images_to_landmarks.py      
+│   │   ├── preprocess.py                       
+│   │   ├── collect_sequences.py               
+│   │   └── preprocess_sequences.py            
 │   ├── models/
-│   │   ├── train_model.py                      # UNCHANGED
-│   │   ├── evaluate.py                         # UNCHANGED
-│   │   ├── train_sequence_model.py             # NEW
-│   │   └── evaluate_sequence_model.py          # NEW
+│   │   ├── train_model.py                      
+│   │   ├── evaluate.py                        
+│   │   ├── train_sequence_model.py            
+│   │   └── evaluate_sequence_model.py          
 │   ├── inference/
-│   │   ├── mediapipe_detector.py               # UNCHANGED (reused)
-│   │   ├── predict.py                          # UNCHANGED
-│   │   └── predict_sequence.py                 # NEW
+│   │   ├── mediapipe_detector.py               
+│   │   ├── predict.py                          
+│   │   └── predict_sequence.py                 
 │   └── utils/
-│       └── utils.py                            # UNCHANGED (reused)
-├── requirements.txt                            # + torch
-└── app.py                                      # UNCHANGED
+│       └── utils.py                            
+├── requirements.txt                           
+└── app.py                                      
 
 ## Setup
 
