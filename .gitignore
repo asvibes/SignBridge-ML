@@ -10,3 +10,10 @@ outputs/confusion_matrix/*.png
 outputs/logs/*.log
 outputs/predictions/*
 .DS_Store
+
+# J/Z sequence data and trained model
+dataset/sequences/
+dataset/sequences_processed/
+models/checkpoints_sequence/
+models/final/sequence_model.pt
+models/final/sequence_model_meta.json
