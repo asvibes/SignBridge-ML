@@ -43,6 +43,21 @@ vocabulary:
   - x
   - y
 
+# Digits 0-9 -- also static single-frame poses, so they slot into the
+  # same static RF pipeline as the letters above. Quoted as strings
+  # ('0' not 0) so YAML doesn't parse them as ints -- os.path.join() and
+  # every dict/folder-name lookup downstream assumes string labels.
+  - '0'
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - '6'
+  - '7'
+  - '8'
+  - '9'
+
 paths:
   dataset_raw: dataset/raw
   dataset_processed: dataset/processed
