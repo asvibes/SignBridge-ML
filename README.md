@@ -81,6 +81,8 @@ SignBridge-ML/
 ├── requirements.txt                           
 └── app.py                                      
 
+```
+
 ## Setup
 
 ```bash
